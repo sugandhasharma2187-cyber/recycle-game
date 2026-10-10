@@ -31,7 +31,7 @@ def draw():
 def update():
     global item_list
     if len(item_list) == 0:
-        items_list = make_items(current_level)
+        item_list = make_items(current_level)
 #it will generate items based on the current level
 def make_items(number_of_extra_items):
     items_to_create = get_option_to_create(number_of_extra_items)
@@ -68,27 +68,50 @@ def layout_items(items_to_layout):
 
 #how to animate the items
 def animate_items(items_to_animate):
-    pass
+    global animations
+    for item in items_to_animate:
+        duration = START_SPEED - current_level
+        item.anchor = ("center","bottom")
+        animation = animate(item,duration=duration,on_finished=handle_game_over,y=H)
+        animation_list.append(animation)
+    
 
 #if you hit any other item execpt paper bag it will end game
 def handle_game_over():
-    pass
+    global game_over
+    game_over = True
 
 #to check the collision detection for mouse click on items
 def on_mouse_down(pos):
-    pass
+    global item_list, current_level
+    for item in item_list:
+        if item.collidepoint(pos):
+            if "paper_bag" in item.image:
+                handle_game_complete()
+            else:
+                handle_game_over()
+
 
 #handle the game completion
 def handle_game_complete():
-    pass
+    global game_complete,current_level,animation_list,item_list
+    stop_animation(animation_list)
+    if current_level == FINAL_LEVEL:
+        game_complete = True 
+    else:
+        current_level += 1
+        item_list = []
 
 #control the animation
 def stop_animation(animations_to_stop):
-    pass
+    for animation in animations_to_stop:
+        if animation.running:
+            animation.stop()
 
 
-
-    
+def display_message(heading_text,sub_heading_text):
+   screen.draw.text(heading_text,fontsize=60,center=CENTER,color="purple") 
+   screen.draw.text(sub_heading_text,fontsize=40,center=(CENTER_X,CENTER_Y+30),color="dark blue")
 
 
 
