@@ -102,6 +102,7 @@ def handle_game_complete():
     else:
         current_level += 1
         item_list = []
+        animation_list = []
 
 #control the animation
 def stop_animation(animations_to_stop):
