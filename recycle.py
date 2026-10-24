@@ -1,6 +1,7 @@
 import pgzrun
 import random
 W=700
+
 H=700
 CENTER_X = W/2
 CENTER_Y = H/2
@@ -23,7 +24,7 @@ def draw():
     if game_over:
         display_message("gameover","try again")
     elif game_complete:
-        display_message("congrats you won the game!")
+        display_message("you won","congrats you won the game!")
     else:
         for item in item_list:
             item.draw()
